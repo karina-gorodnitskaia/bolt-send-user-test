@@ -497,7 +497,63 @@ function BottomSheetS({ isOpen, setIsOpen, isArrived, isPaymentCollected, isDeli
   );
 }
 
+function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
+  const [value, setValue] = useState("");
+  const [error, setError] = useState(false);
+
+  const submit = () => {
+    if (value === "bolt2026") {
+      try { localStorage.setItem("bolt-send-unlocked", "1"); } catch {}
+      onUnlock();
+    } else {
+      setError(true);
+    }
+  };
+
+  return (
+    <div className="flex h-[100dvh] w-full items-center justify-center bg-gray-100 p-6">
+      <div className="flex flex-col gap-4 w-full max-w-[320px]">
+        <h1 style={{ fontFamily: "'Inter Variable', sans-serif", fontWeight: 650, fontSize: 22, color: "#191F1C", margin: 0, textAlign: "center" }}>
+          Bolt Send prototype
+        </h1>
+        <input
+          type="password"
+          value={value}
+          autoFocus
+          onChange={(e) => { setValue(e.target.value); setError(false); }}
+          onKeyDown={(e) => { if (e.key === "Enter") submit(); }}
+          placeholder="Password"
+          style={{
+            width: "100%", height: 48, borderRadius: 12,
+            border: error ? "1px solid #EE3333" : "1px solid #D1D5DB",
+            padding: "0 16px", fontSize: 16, outline: "none",
+            fontFamily: "'Inter Variable', sans-serif",
+          }}
+        />
+        {error && (
+          <p style={{ color: "#EE3333", fontSize: 13, margin: 0, textAlign: "center", fontFamily: "'Inter Variable', sans-serif" }}>
+            Incorrect password
+          </p>
+        )}
+        <button
+          onClick={submit}
+          style={{
+            width: "100%", height: 48, borderRadius: 12,
+            background: "#32BB78", color: "white", border: "none", cursor: "pointer",
+            fontFamily: "'Inter Variable', sans-serif", fontWeight: 650, fontSize: 16,
+          }}
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
+  const [unlocked, setUnlocked] = useState(() => {
+    try { return localStorage.getItem("bolt-send-unlocked") === "1"; } catch { return false; }
+  });
   const [isOpen, setIsOpen] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);
   const [isArrived, setIsArrived] = useState(false);
@@ -505,6 +561,8 @@ export default function App() {
   const [isPaymentCollected, setIsPaymentCollected] = useState(false);
   const [isDelivering, setIsDelivering] = useState(false);
   const [restartKey, setRestartKey] = useState(0);
+
+  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
 
   return (
     <div className="flex h-[100dvh] w-full sm:items-center sm:justify-center bg-gray-100 relative">
