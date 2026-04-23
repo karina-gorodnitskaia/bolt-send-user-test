@@ -23,24 +23,26 @@ function Root() {
 
   return (
     <>
-      <div
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] flex gap-1 bg-white/85 backdrop-blur-md p-1 rounded-full shadow-sm border border-gray-200"
-      >
-        {([
-          ["default", "Default"],
-          ["romania", "Romania"],
-        ] as const).map(([key, label]) => (
-          <button
-            key={key}
-            onClick={() => select(key)}
-            className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-colors ${
-              tab === key ? "bg-black text-white" : "text-gray-600 hover:text-black"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      {import.meta.env.DEV && (
+        <div
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] flex gap-1 bg-white/85 backdrop-blur-md p-1 rounded-full shadow-sm border border-gray-200"
+        >
+          {([
+            ["default", "Default"],
+            ["romania", "Romania"],
+          ] as const).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => select(key)}
+              className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-colors ${
+                tab === key ? "bg-black text-white" : "text-gray-600 hover:text-black"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
       {tab === "romania" ? <AppRomania /> : <App />}
     </>
   );

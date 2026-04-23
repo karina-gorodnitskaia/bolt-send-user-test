@@ -1987,30 +1987,34 @@ export default function AppRomania() {
 
   return (
     <div className="flex h-[100dvh] w-full sm:items-center sm:justify-center bg-gray-100 relative">
-      <button
-        onClick={resetFlow}
-        className="fixed top-4 right-4 z-[999] bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-sm border border-gray-200 font-medium text-sm text-gray-700 hover:bg-white hover:text-black transition-colors"
-      >
-        Restart
-      </button>
-
-      <div className="fixed top-4 left-4 z-[999] max-w-[calc(100vw-140px)] flex flex-wrap gap-1 bg-white/85 backdrop-blur-md p-1 rounded-2xl shadow-sm border border-gray-200">
-        {([
-          ['current', 'Current'],
-          ['tapChip', 'Tap'],
-          ['longPress', 'Hold'],
-        ] as const).map(([v, label]) => (
+      {import.meta.env.DEV && (
+        <>
           <button
-            key={v}
-            onClick={() => { setVariant(v); resetFlow(); }}
-            className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-colors ${
-              variant === v ? 'bg-black text-white' : 'text-gray-600 hover:text-black'
-            }`}
+            onClick={resetFlow}
+            className="fixed top-4 right-4 z-[999] bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-sm border border-gray-200 font-medium text-sm text-gray-700 hover:bg-white hover:text-black transition-colors"
           >
-            {label}
+            Restart
           </button>
-        ))}
-      </div>
+
+          <div className="fixed top-4 left-4 z-[999] max-w-[calc(100vw-140px)] flex flex-wrap gap-1 bg-white/85 backdrop-blur-md p-1 rounded-2xl shadow-sm border border-gray-200">
+            {([
+              ['current', 'Current'],
+              ['tapChip', 'Tap'],
+              ['longPress', 'Hold'],
+            ] as const).map(([v, label]) => (
+              <button
+                key={v}
+                onClick={() => { setVariant(v); resetFlow(); }}
+                className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-colors ${
+                  variant === v ? 'bg-black text-white' : 'text-gray-600 hover:text-black'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       <div id="app-container" className="relative h-full w-full sm:h-[812px] sm:w-[375px] overflow-hidden bg-black sm:shadow-xl sm:rounded-[40px] sm:border-[8px] sm:border-black">
         <AnimatePresence>
