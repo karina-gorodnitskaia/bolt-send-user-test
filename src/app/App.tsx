@@ -1065,11 +1065,11 @@ function RatingScreen({ onConfirm }: { onConfirm: () => void }) {
   const [comment, setComment] = useState('');
   const [fieldError, setFieldError] = useState(false);
   const [isCommentFocused, setIsCommentFocused] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    setIsTouchDevice(window.matchMedia('(pointer: coarse)').matches);
-  }, []);
+  const isTouchDevice = typeof window !== 'undefined' && (
+    window.matchMedia('(pointer: coarse)').matches ||
+    'ontouchstart' in window ||
+    window.innerWidth < 640
+  );
   const commentRequired = rating > 0 && rating < 5;
   const enabled = rating > 0;
 
