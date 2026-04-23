@@ -1236,7 +1236,8 @@ function RatingScreen({ onConfirm }: { onConfirm: () => void }) {
         </motion.button>
       </div>
 
-      <div className="max-[639px]:hidden [@media(pointer:coarse)]:hidden">
+      <style>{`@media (pointer: coarse), (max-width: 639px) { .rating-custom-keyboard { display: none !important; } }`}</style>
+      <div className="rating-custom-keyboard">
         <AnimatePresence>
           {isCommentFocused && (
             <QwertyKeyboard
