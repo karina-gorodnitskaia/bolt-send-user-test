@@ -32,7 +32,7 @@ function IcClose() {
 
 function FabStandardExtendedInactive() {
   return (
-    <div className="content-stretch flex flex-col gap-[10px] items-end pr-[12px] relative shadow-[0px_1px_3px_0px_rgba(47,49,63,0.04),0px_4px_8px_0px_rgba(47,49,63,0.08),0px_8px_16px_0px_rgba(47,49,63,0.08)] shrink-0" data-name="FAB/Standard/Extended/Inactive">
+    <div className="content-stretch flex flex-col gap-[10px] items-end pr-[12px] relative shrink-0" data-name="FAB/Standard/Extended/Inactive">
       <ButtonBasis />
       <IcClose />
       <p className="absolute font-['Euclid_Circular_B:Regular',sans-serif] leading-[24px] left-[48px] not-italic text-[#fafafb] text-[16px] top-[calc(50%-12px)] whitespace-nowrap" style={{ fontFeatureSettings: "'lnum', 'tnum'" }}>
