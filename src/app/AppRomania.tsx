@@ -1077,11 +1077,6 @@ function RatingScreen({ onConfirm }: { onConfirm: () => void }) {
   const [comment, setComment] = useState('');
   const [fieldError, setFieldError] = useState(false);
   const [isCommentFocused, setIsCommentFocused] = useState(false);
-  const isTouchDevice = typeof window !== 'undefined' && (
-    window.matchMedia('(pointer: coarse)').matches ||
-    'ontouchstart' in window ||
-    window.innerWidth < 640
-  );
   const commentRequired = rating > 0 && rating < 5;
   const enabled = rating > 0;
 
@@ -1241,16 +1236,18 @@ function RatingScreen({ onConfirm }: { onConfirm: () => void }) {
         </motion.button>
       </div>
 
-      <AnimatePresence>
-        {isCommentFocused && !isTouchDevice && (
-          <QwertyKeyboard
-            onKey={(ch) => { setComment((c) => c + ch); if (fieldError) setFieldError(false); }}
-            onSpace={() => { setComment((c) => c + ' '); }}
-            onBackspace={() => { setComment((c) => c.slice(0, -1)); }}
-            onReturn={() => { setIsCommentFocused(false); }}
-          />
-        )}
-      </AnimatePresence>
+      <div className="max-[639px]:hidden [@media(pointer:coarse)]:hidden">
+        <AnimatePresence>
+          {isCommentFocused && (
+            <QwertyKeyboard
+              onKey={(ch) => { setComment((c) => c + ch); if (fieldError) setFieldError(false); }}
+              onSpace={() => { setComment((c) => c + ' '); }}
+              onBackspace={() => { setComment((c) => c.slice(0, -1)); }}
+              onReturn={() => { setIsCommentFocused(false); }}
+            />
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 }
