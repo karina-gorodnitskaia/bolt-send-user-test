@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import svgPaths from "./svg-iqn7xswld4";
 
-export default function DeliveryDetails() {
-  const [isSenderExpanded, setIsSenderExpanded] = useState(true);
+export default function DeliveryDetails({ isDelivering = false, senderName = "Chandra Krishnamurthy", receiverName = "Flington Doe", pickupAddress = "Oranienburger Str. 12", dropoffAddress = "Berliner Str. 22", cityName = "Berlin", onCancelDelivery, onSenderCall, onReceiverCall, onSenderMessage, onReceiverMessage }: { isDelivering?: boolean; senderName?: string; receiverName?: string; pickupAddress?: string; dropoffAddress?: string; cityName?: string; onCancelDelivery?: () => void; onSenderCall?: () => void; onReceiverCall?: () => void; onSenderMessage?: () => void; onReceiverMessage?: () => void } = {}) {
+  const [isSenderExpanded, setIsSenderExpanded] = useState(!isDelivering);
 
   return (
     <div className="bg-white flex flex-col items-start w-full relative">
@@ -47,7 +47,7 @@ export default function DeliveryDetails() {
                     </div>
                     <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-name="[secondary]">
                       <p className={`font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[20px] relative shrink-0 text-[14px] tracking-[-0.084px] w-full transition-colors duration-300 ${isSenderExpanded ? 'text-[#808c9f]' : 'text-[rgba(0,10,7,0.63)]'}`} style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-                        Chandra Krishnamurthy
+                        {senderName}
                       </p>
                     </div>
                   </div>
@@ -123,7 +123,11 @@ export default function DeliveryDetails() {
               </div>
               <div className="bg-white content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-name="Contact party">
                 <div className="content-stretch flex gap-[8px] items-center px-[24px] relative shrink-0 w-full">
-            <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-name="Secondary Main Button">
+            <div
+              onClick={onSenderCall}
+              className={`content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative ${onSenderCall ? 'cursor-pointer active:opacity-70' : ''}`}
+              data-name="Secondary Main Button"
+            >
               <div className="bg-[rgba(73,93,122,0.08)] min-h-[48px] relative rounded-[9600px] shrink-0 w-full" data-name="button">
                 <div className="flex flex-row items-center justify-center min-h-[inherit] overflow-clip rounded-[inherit] size-full">
                   <div className="content-stretch flex items-center justify-center min-h-[inherit] px-[20px] py-[8px] relative size-full">
@@ -147,7 +151,11 @@ export default function DeliveryDetails() {
                 </div>
               </div>
             </div>
-            <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-name="2nd Icon Button">
+            <div
+              onClick={onSenderMessage}
+              className={`content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative ${onSenderMessage ? 'cursor-pointer active:opacity-70' : ''}`}
+              data-name="2nd Icon Button"
+            >
               <div className="bg-[rgba(73,93,122,0.08)] min-h-[48px] relative rounded-[9600px] shrink-0 w-full" data-name="button">
                 <div className="flex flex-row items-center justify-center min-h-[inherit] overflow-clip rounded-[inherit] size-full">
                   <div className="content-stretch flex items-center justify-center min-h-[inherit] px-[20px] py-[8px] relative size-full">
@@ -227,7 +235,7 @@ export default function DeliveryDetails() {
         </div>
         <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Player">
           <div className="w-full group">
-            <input type="checkbox" id="receiver-toggle" className="hidden peer" />
+            <input type="checkbox" id="receiver-toggle" className="hidden peer" defaultChecked={isDelivering} />
             <label htmlFor="receiver-toggle" className="bg-white content-stretch flex flex-col items-start justify-center px-[24px] relative shrink-0 w-full cursor-pointer block" data-name="Ⓖ List Item">
               <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Top padding">
                 <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Vertical spacing">
@@ -262,7 +270,7 @@ export default function DeliveryDetails() {
                       </div>
                       <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-name="[secondary]">
                         <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[20px] relative shrink-0 text-[14px] tracking-[-0.084px] w-full transition-colors duration-300 text-[#808c9f] group-has-[:checked]:text-[rgba(0,10,7,0.63)]" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-                          Flington Doe
+                          {receiverName}
                         </p>
                       </div>
                     </div>
@@ -289,7 +297,11 @@ export default function DeliveryDetails() {
                 <div className="h-[8px] shrink-0 w-full" data-name=".Spacing" />
                 <div className="bg-white content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-name="Contact party">
                   <div className="content-stretch flex gap-[8px] items-center px-[24px] relative shrink-0 w-full">
-                    <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-name="Secondary Main Button">
+                    <div
+                      onClick={onReceiverCall}
+                      className={`content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative ${onReceiverCall ? 'cursor-pointer active:opacity-70' : ''}`}
+                      data-name="Secondary Main Button"
+                    >
                       <div className="bg-[rgba(0,45,30,0.07)] min-h-[48px] relative rounded-[9600px] shrink-0 w-full" data-name="button">
                         <div className="flex flex-row items-center justify-center min-h-[inherit] overflow-clip rounded-[inherit] size-full">
                           <div className="content-stretch flex items-center justify-center min-h-[inherit] px-[20px] py-[8px] relative size-full">
@@ -313,7 +325,11 @@ export default function DeliveryDetails() {
                         </div>
                       </div>
                     </div>
-                    <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-name="2nd Icon Button">
+                    <div
+                      onClick={onReceiverMessage}
+                      className={`content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative ${onReceiverMessage ? 'cursor-pointer active:opacity-70' : ''}`}
+                      data-name="2nd Icon Button"
+                    >
                       <div className="bg-[rgba(0,45,30,0.07)] min-h-[48px] relative rounded-[9600px] shrink-0 w-full" data-name="button">
                         <div className="flex flex-row items-center justify-center min-h-[inherit] overflow-clip rounded-[inherit] size-full">
                           <div className="content-stretch flex items-center justify-center min-h-[inherit] px-[20px] py-[8px] relative size-full">
@@ -447,14 +463,16 @@ export default function DeliveryDetails() {
                 <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Text">
                   <div className="content-stretch flex flex-col items-start overflow-clip py-[2px] relative shrink-0 w-full" data-name="[primary]">
                     <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[20px] relative shrink-0 text-[#2a313c] text-[16px] tracking-[-0.176px] w-full" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-                      Oranienburger Str. 12
+                      {pickupAddress}
                     </p>
                   </div>
-                  <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-name="[secondary]">
-                    <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[20px] relative shrink-0 text-[#808c9f] text-[14px] tracking-[-0.084px] w-full" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-                      Berlin
-                    </p>
-                  </div>
+                  {cityName && (
+                    <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-name="[secondary]">
+                      <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[20px] relative shrink-0 text-[#808c9f] text-[14px] tracking-[-0.084px] w-full" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
+                        {cityName}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="content-stretch flex items-start justify-end pl-[12px] relative shrink-0" data-name="End Slot">
@@ -528,14 +546,16 @@ export default function DeliveryDetails() {
                 <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Text">
                   <div className="content-stretch flex flex-col items-start overflow-clip py-[2px] relative shrink-0 w-full" data-name="[primary]">
                     <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[20px] relative shrink-0 text-[#2a313c] text-[16px] tracking-[-0.176px] w-full" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-                      Berliner Str. 22
+                      {dropoffAddress}
                     </p>
                   </div>
-                  <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-name="[secondary]">
-                    <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[20px] relative shrink-0 text-[#808c9f] text-[14px] tracking-[-0.084px] w-full" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-                      Berlin
-                    </p>
-                  </div>
+                  {cityName && (
+                    <div className="content-stretch flex flex-col items-start overflow-clip relative shrink-0 w-full" data-name="[secondary]">
+                      <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[20px] relative shrink-0 text-[#808c9f] text-[14px] tracking-[-0.084px] w-full" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
+                        {cityName}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="content-stretch flex items-start justify-end pl-[12px] relative shrink-0" data-name="End Slot">
@@ -769,7 +789,11 @@ export default function DeliveryDetails() {
             </div>
           </div>
         </div>
-        <div className="bg-white content-stretch flex flex-col items-start justify-center px-[24px] relative shrink-0 w-full" data-name="Ⓖ List Item">
+        <div
+          onClick={onCancelDelivery}
+          className={`bg-white content-stretch flex flex-col items-start justify-center px-[24px] relative shrink-0 w-full ${onCancelDelivery ? 'cursor-pointer active:bg-[rgba(0,0,0,0.04)]' : ''}`}
+          data-name="Ⓖ List Item"
+        >
           <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Top padding">
             <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="Vertical spacing">
               <div className="h-[12px] shrink-0 w-full" data-name=".Spacing" />

@@ -5,7 +5,7 @@ function Secondary() {
     <div className="content-stretch flex flex-col items-start overflow-clip py-[2px] relative shrink-0 w-full" data-name="[secondary]">
       <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[0] relative shrink-0 text-[#191f1c] text-[0px] tracking-[-0.084px] w-full" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
         <span className="leading-[20px] text-[14px]">{`Collect the parcel and `}</span>
-        <span className="font-['Inter_Variable:SemiBold',sans-serif] font-[650] leading-[20px] text-[14px]" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>{`29.79 € `}</span>
+        <span className="font-['Inter_Variable:SemiBold',sans-serif] font-[650] leading-[20px] text-[14px]" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>{`18.92 € `}</span>
         <span className="leading-[20px] text-[14px]">payment</span>
       </p>
     </div>

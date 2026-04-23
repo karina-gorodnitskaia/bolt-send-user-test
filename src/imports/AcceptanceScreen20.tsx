@@ -88,28 +88,28 @@ function PaymentMethod() {
   );
 }
 
-function Price() {
+function Price({ priceText = "18.92 €" }: { priceText?: string }) {
   return (
     <div className="content-stretch flex items-end relative shrink-0" data-name="price">
       <div className="flex flex-col font-['Inter_Variable:SemiBold',sans-serif] font-[650] justify-center leading-[0] relative shrink-0 text-[#2a313c] text-[24px] tracking-[-0.48px] whitespace-nowrap" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-        <p className="leading-[30px]">18.92 €</p>
+        <p className="leading-[30px]">{priceText}</p>
       </div>
     </div>
   );
 }
 
-function MainInfo() {
+function MainInfo({ priceText }: { priceText?: string }) {
   return (
     <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-name="main info">
-      <Price />
+      <Price priceText={priceText} />
     </div>
   );
 }
 
-function MainTripInfo() {
+function MainTripInfo({ priceText }: { priceText?: string }) {
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-name="main trip info">
-      <MainInfo />
+      <MainInfo priceText={priceText} />
       <motion.div
         className="absolute bg-[#32bb78] bottom-[-12px] h-[4px] left-[-18px] right-[-16px] rounded-br-[10px] rounded-tr-[10px]"
         animate={{ scaleX: [0, 1] }}
@@ -121,19 +121,19 @@ function MainTripInfo() {
   );
 }
 
-function Frame1() {
+function Frame1({ priceText }: { priceText?: string }) {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-start relative shrink-0 w-full">
       <div className="content-start flex flex-wrap gap-[8px] items-start relative shrink-0 w-full" data-name="Acceptance labels">
         <Category />
         <PaymentMethod />
       </div>
-      <MainTripInfo />
+      <MainTripInfo priceText={priceText} />
     </div>
   );
 }
 
-function Frame10() {
+function Frame10({ senderName = "Chandra Krishnamurthy" }: { senderName?: string }) {
   return (
     <div className="content-stretch flex gap-[2px] items-center relative shrink-0">
       <div className="relative shrink-0 size-[16px]" data-name="verified_original">
@@ -151,7 +151,7 @@ function Frame10() {
         </div>
       </div>
       <p className="font-['Inter_Variable:SemiBold',sans-serif] font-[650] leading-[20px] relative shrink-0 text-[#2a313c] text-[14px] tracking-[-0.084px] whitespace-nowrap" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-        Chandra Krishnamurthy
+        {senderName}
       </p>
     </div>
   );
@@ -174,10 +174,10 @@ function Frame() {
   );
 }
 
-function Frame9() {
+function Frame9({ senderName }: { senderName?: string }) {
   return (
     <div className="content-stretch flex gap-[4px] items-center relative shrink-0">
-      <Frame10 />
+      <Frame10 senderName={senderName} />
       <Frame />
     </div>
   );
@@ -243,38 +243,38 @@ function Frame2() {
   );
 }
 
-function Frame8() {
+function Frame8({ pickupAddress = "Karl-Liebknecht-Str. 29, 10178 Berlin" }: { pickupAddress?: string }) {
   return (
     <div className="content-start flex flex-[1_0_0] flex-wrap items-start min-w-px relative">
       <div className="flex flex-[1_0_0] flex-col font-['Inter_Variable:Regular',sans-serif] font-[450] justify-end leading-[0] min-w-px relative text-[#2a313c] text-[16px] tracking-[-0.176px]" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-        <p className="leading-[24px]">Karl-Liebknecht-Str. 29, 10178 Berlin</p>
+        <p className="leading-[24px]">{pickupAddress}</p>
       </div>
     </div>
   );
 }
 
-function Frame7() {
+function Frame7({ pickupAddress }: { pickupAddress?: string }) {
   return (
     <div className="content-start flex flex-wrap gap-y-[5px] items-start relative shrink-0 w-full">
-      <Frame8 />
+      <Frame8 pickupAddress={pickupAddress} />
     </div>
   );
 }
 
-function Frame14() {
+function Frame14({ pickupAddress }: { pickupAddress?: string }) {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative">
       <Frame2 />
-      <Frame7 />
+      <Frame7 pickupAddress={pickupAddress} />
     </div>
   );
 }
 
-function Frame18() {
+function Frame18({ pickupAddress }: { pickupAddress?: string }) {
   return (
     <div className="content-stretch flex gap-[10px] items-start relative shrink-0 w-full">
       <Frame17 />
-      <Frame14 />
+      <Frame14 pickupAddress={pickupAddress} />
     </div>
   );
 }
@@ -331,75 +331,75 @@ function Frame4() {
   );
 }
 
-function Frame13() {
+function Frame13({ dropoffAddress = "Oranienburger Straße 12A, 13642 Berlin" }: { dropoffAddress?: string }) {
   return (
     <div className="content-start flex flex-[1_0_0] flex-wrap items-start min-w-px relative">
       <div className="flex flex-[1_0_0] flex-col font-['Inter_Variable:Regular',sans-serif] font-[450] justify-end leading-[0] min-w-px relative text-[#2a313c] text-[16px] tracking-[-0.176px]" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-        <p className="leading-[24px]">Oranienburger Straße 12A, 13642 Berlin</p>
+        <p className="leading-[24px]">{dropoffAddress}</p>
       </div>
     </div>
   );
 }
 
-function Frame12() {
+function Frame12({ dropoffAddress }: { dropoffAddress?: string }) {
   return (
     <div className="content-start flex flex-wrap gap-y-[5px] items-start relative shrink-0 w-full">
-      <Frame13 />
+      <Frame13 dropoffAddress={dropoffAddress} />
     </div>
   );
 }
 
-function Frame15() {
+function Frame15({ dropoffAddress }: { dropoffAddress?: string }) {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative">
       <Frame4 />
-      <Frame12 />
+      <Frame12 dropoffAddress={dropoffAddress} />
     </div>
   );
 }
 
-function Frame21() {
+function Frame21({ dropoffAddress }: { dropoffAddress?: string }) {
   return (
     <div className="content-stretch flex gap-[10px] items-start relative shrink-0 w-full">
       <Frame19 />
-      <Frame15 />
+      <Frame15 dropoffAddress={dropoffAddress} />
     </div>
   );
 }
 
-function Frame3() {
+function Frame3({ pickupAddress, dropoffAddress }: { pickupAddress?: string; dropoffAddress?: string }) {
   return (
     <div className="content-stretch flex flex-[1_0_0] flex-col gap-[4px] items-start min-w-px relative">
-      <Frame18 />
-      <Frame21 />
+      <Frame18 pickupAddress={pickupAddress} />
+      <Frame21 dropoffAddress={dropoffAddress} />
     </div>
   );
 }
 
-function Frame5() {
+function Frame5({ pickupAddress, dropoffAddress }: { pickupAddress?: string; dropoffAddress?: string }) {
   return (
     <div className="content-stretch flex items-start relative shrink-0 w-full">
-      <Frame3 />
+      <Frame3 pickupAddress={pickupAddress} dropoffAddress={dropoffAddress} />
     </div>
   );
 }
 
-function Frame16() {
+function Frame16({ senderName, pickupAddress, dropoffAddress }: { senderName?: string; pickupAddress?: string; dropoffAddress?: string }) {
   return (
     <div className="content-stretch flex flex-col gap-[8px] items-start relative shrink-0">
       <div className="bg-[rgba(73,93,122,0.08)] content-stretch flex h-[28px] items-center overflow-clip px-[8px] py-[3px] relative rounded-[24px] shrink-0" data-name="Acceptance User Info">
-        <Frame9 />
+        <Frame9 senderName={senderName} />
       </div>
-      <Frame5 />
+      <Frame5 pickupAddress={pickupAddress} dropoffAddress={dropoffAddress} />
     </div>
   );
 }
 
-function Top() {
+function Top({ priceText, senderName, pickupAddress, dropoffAddress }: { priceText?: string; senderName?: string; pickupAddress?: string; dropoffAddress?: string }) {
   return (
     <div className="content-stretch flex flex-col gap-[20px] items-start px-[16px] relative self-stretch shrink-0 w-full" data-name="Top">
-      <Frame1 />
-      <Frame16 />
+      <Frame1 priceText={priceText} />
+      <Frame16 senderName={senderName} pickupAddress={pickupAddress} dropoffAddress={dropoffAddress} />
     </div>
   );
 }
@@ -464,7 +464,7 @@ function Pillar() {
   );
 }
 
-export default function AcceptanceScreen({ onAccept }: { onAccept?: () => void }) {
+export default function AcceptanceScreen({ onAccept, priceText, senderName, pickupAddress, dropoffAddress }: { onAccept?: () => void; priceText?: string; senderName?: string; pickupAddress?: string; dropoffAddress?: string }) {
   return (
     <div className="bg-white relative size-full" data-name="Acceptance Screen 2.0">
       <div className="-translate-x-1/2 absolute h-[812px] left-1/2 overflow-clip top-0 w-full max-w-[375px]" data-name="Map Area">
@@ -593,7 +593,7 @@ export default function AcceptanceScreen({ onAccept }: { onAccept?: () => void }
       </div>
       <div className="absolute bg-white bottom-[84px] left-[12px] right-[12px] rounded-[16px]" data-name="Acceptance Trip Card">
         <div className="content-stretch flex items-start overflow-clip py-[16px] relative rounded-[inherit] w-full">
-          <Top />
+          <Top priceText={priceText} senderName={senderName} pickupAddress={pickupAddress} dropoffAddress={dropoffAddress} />
         </div>
         <div aria-hidden="true" className="absolute border-3 border-[#32bb78] border-solid inset-0 pointer-events-none rounded-[16px] shadow-[0px_6px_24px_0px_rgba(0,0,0,0.24)]" />
       </div>
@@ -609,7 +609,7 @@ export default function AcceptanceScreen({ onAccept }: { onAccept?: () => void }
       <div className="absolute left-0 top-0 w-full pointer-events-none">
         <StatusBarIOs />
       </div>
-      <div className="absolute content-stretch flex flex-col isolate items-center justify-end left-[24px] shadow-[0px_4px_8px_0px_rgba(0,0,0,0.25)] top-[91px] w-[36px]" data-name="Pin">
+      <div className="absolute content-stretch flex flex-col isolate items-center justify-end left-[24px] top-[91px] w-[36px]" data-name="Pin">
         <Bubble />
         <Pillar />
       </div>

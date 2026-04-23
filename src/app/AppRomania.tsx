@@ -58,11 +58,11 @@ function Frame({ onToggle, isOpen, titleText }: { onToggle: () => void; isOpen?:
   );
 }
 
-function Rating() {
+function Rating({ value = "5.0" }: { value?: string }) {
   return (
     <div className="content-stretch flex gap-[2px] items-center relative shrink-0" data-name="rating">
       <div className="flex flex-col font-['Inter_Variable:SemiBold',sans-serif] font-[650] justify-end leading-[0] relative shrink-0 text-[#f58300] text-[18px] tracking-[-0.252px] whitespace-nowrap" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-        <p className="leading-[24px]">5.0</p>
+        <p className="leading-[24px]">{value}</p>
       </div>
       <div className="relative shrink-0 size-[16px]" data-name="star">
         <div className="absolute inset-[0_2.08%_8.33%_2.08%]" data-name="shape">
@@ -79,37 +79,37 @@ function RidesCount() {
   return <div className="content-stretch flex gap-[6px] h-[24px] items-center shrink-0 w-[92px]" data-name="rides count" />;
 }
 
-function Row({ name = "Chandra Krishnamurthy" }: { name?: string }) {
+function Row({ name = "Alexandra Dumitrescu", rating }: { name?: string; rating?: string }) {
   return (
     <div className="content-stretch flex gap-[6px] items-center relative shrink-0" data-name="row">
       <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[24px] relative shrink-0 text-[#2a313c] text-[18px] tracking-[-0.252px] whitespace-nowrap" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
         {name}
       </p>
-      <Rating />
+      <Rating value={rating} />
       <RidesCount />
     </div>
   );
 }
 
-function Frame1({ isOpen, name }: { isOpen?: boolean; name?: string }) {
+function Frame1({ isOpen, name, rating }: { isOpen?: boolean; name?: string; rating?: string }) {
   if (isOpen) return null;
 
   return (
     <div className="content-stretch flex flex-col items-start relative shrink-0 w-full overflow-hidden gap-[8px]">
       <p className="font-['Inter_Variable:Regular',sans-serif] font-[450] leading-[24px] min-w-full relative shrink-0 text-[#2a313c] text-[18px] tracking-[-0.252px] w-[min-content]" style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}>
-        Karl-Liebknecht-Str. 29, 10178 Berlin
+        Bulevardul Regina Elisabeta 4, București
       </p>
-      <Row name={name} />
+      <Row name={name} rating={rating} />
     </div>
   );
 }
 
-function Frame2({ onToggle, isOpen, isScrolled, titleText, name }: { onToggle: () => void; isOpen?: boolean; isScrolled?: boolean; titleText?: string; name?: string }) {
+function Frame2({ onToggle, isOpen, isScrolled, titleText, name, rating }: { onToggle: () => void; isOpen?: boolean; isScrolled?: boolean; titleText?: string; name?: string; rating?: string }) {
   return (
     <div className="relative shrink-0 w-full">
       <div className={`content-stretch flex flex-col items-start px-[24px] relative size-full transition-all duration-300 ${isOpen ? 'gap-0' : 'gap-[4px]'} ${isScrolled ? 'pb-[8px]' : ''}`}>
         <Frame onToggle={onToggle} isOpen={isOpen} titleText={titleText} />
-        <Frame1 isOpen={isOpen} name={name} />
+        <Frame1 isOpen={isOpen} name={name} rating={rating} />
       </div>
     </div>
   );
@@ -119,7 +119,7 @@ function Spacing1() {
   return null;
 }
 
-function Status({ onToggle, isOpen, isScrolled, titleText, name }: { onToggle: () => void; isOpen?: boolean; isScrolled?: boolean; titleText?: string; name?: string }) {
+function Status({ onToggle, isOpen, isScrolled, titleText, name, rating }: { onToggle: () => void; isOpen?: boolean; isScrolled?: boolean; titleText?: string; name?: string; rating?: string }) {
   return (
     <div className="bg-white content-stretch flex flex-col items-start rounded-tl-[16px] rounded-tr-[16px] shrink-0 sticky top-0 w-full z-[7]" data-name="Status">
       <div className="relative shrink-0 w-full" data-name="Ⓖ Section Header">
@@ -129,7 +129,7 @@ function Status({ onToggle, isOpen, isScrolled, titleText, name }: { onToggle: (
           </div>
         </div>
       </div>
-      <Frame2 onToggle={onToggle} isOpen={isOpen} isScrolled={isScrolled} titleText={titleText} name={name} />
+      <Frame2 onToggle={onToggle} isOpen={isOpen} isScrolled={isScrolled} titleText={titleText} name={name} rating={rating} />
 
     </div>
   );
@@ -850,12 +850,16 @@ function QwertyKeyboard({ onKey, onBackspace, onSpace, onReturn }: { onKey: (ch:
 function ChatScreen({ contactName, onClose }: { contactName: string; onClose: () => void }) {
   const firstName = contactName.split(' ')[0];
   const initials = contactName.split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase();
-  const messages = [
+  const fullMessages = [
     { from: 'them', text: `Hi! This is ${firstName} 👋` },
     { from: 'me', text: "Hey! I'm on my way to pick up the parcel" },
     { from: 'them', text: 'Great, thanks! Give me a call when you are close.' },
     { from: 'me', text: 'Sure, see you soon!' },
   ];
+  const messages = firstName === 'Mihai' ? [
+    ...fullMessages.slice(0, 2),
+    { from: 'me', text: 'I think I will be in 20 minutes' },
+  ] : fullMessages;
 
   return (
     <motion.div
@@ -865,6 +869,10 @@ function ChatScreen({ contactName, onClose }: { contactName: string; onClose: ()
       transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
       className="absolute inset-0 z-[220] flex flex-col bg-white pointer-events-auto"
     >
+      <div className="pointer-events-none absolute top-0 left-0 w-full z-[1]">
+        <StatusBarIOs />
+      </div>
+
       <div className="pt-[44px] px-4 pb-3 flex items-center gap-3 border-b border-[rgba(73,93,122,0.12)]">
         <button
           onClick={onClose}
@@ -981,6 +989,10 @@ function CallScreen({ contactName, onEnd }: { contactName: string; onEnd: () => 
       className="absolute inset-0 z-[220] flex flex-col items-center pointer-events-auto"
       style={{ background: 'linear-gradient(180deg, #4A5362 0%, #1E2634 100%)' }}
     >
+      <div className="pointer-events-none absolute top-0 left-0 w-full z-[1] opacity-0">
+        <StatusBarIOs />
+      </div>
+
       <div className="pt-[88px] flex flex-col items-center text-white">
         <p
           style={{
@@ -1455,7 +1467,7 @@ function CashChipBanner({ collected, error, collectedLabel, headerText, actionLa
             className={`font-['Inter_Variable:SemiBold',sans-serif] font-[650] text-[#191F1C] m-0 tracking-[-0.4px] ${headerText ? 'text-[16px] leading-[22px]' : 'text-[18px] leading-[22px]'}`}
             style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}
           >
-            {headerText ?? (collected ? '18.92 € collected' : 'Collect 18.92 €')}
+            {headerText ?? (collected ? '94.60 lei collected' : 'Collect 94.60 lei')}
           </p>
           <AnimatePresence mode="wait" initial={false}>
             {collected && collectedLabel !== '' ? (
@@ -1642,7 +1654,7 @@ function LongPressAmount({ confirmed, onConfirm, onPaymentIssue }: { confirmed: 
                 className="font-['Inter_Variable:SemiBold',sans-serif] font-[650] text-[#191F1C] text-[13px] tracking-[-0.2px] m-0"
                 style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}
               >
-                18.92€
+                94.60 lei
               </motion.p>
             )}
           </AnimatePresence>
@@ -1683,7 +1695,7 @@ function PaymentCollectedContent({ onStartDelivery }: { onStartDelivery?: () => 
           <path d="M7 12.5L10.5 16L17 8.5" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
         <p style={{ fontFamily: "'Inter Variable', sans-serif", fontSize: 14, lineHeight: '20px', color: '#191F1C', margin: 0, fontFeatureSettings: "'cv03', 'cv04'" }}>
-          Parcel and <strong style={{ fontWeight: 650 }}>18.92 €</strong> payment collected
+          Parcel and <strong style={{ fontWeight: 650 }}>94.60 lei</strong> payment collected
         </p>
       </div>
       <Frame5
@@ -1741,14 +1753,15 @@ function BottomSheetS({ isOpen, setIsOpen, isArrived, isPaymentCollected, isDeli
   const deliverySecs = deliveryTimeLeft % 60;
   const formattedDeliveryTime = `${deliveryMins.toString().padStart(2, '0')}:${deliverySecs.toString().padStart(2, '0')}`;
   const titleText = isArrivedAtDropoff ? 'Arrived' : isDelivering ? `Delivery in ${formattedDeliveryTime}` : isArrived ? `${formattedTime} Waiting` : undefined;
-  const statusName = isDelivering || isArrivedAtDropoff ? 'Flington Doe' : 'Chandra Krishnamurthy';
+  const statusName = isDelivering || isArrivedAtDropoff ? 'Mihai Ionescu' : 'Alexandra Dumitrescu';
+  const statusRating = isDelivering || isArrivedAtDropoff ? '4.92' : '5.0';
 
   const DRAG_TOP = 44;
   const arrivedBottom =
     variant === 'current' ? containerHeight - 302 :
     variant === 'tapChip' ? containerHeight - 322 :
     containerHeight - 330;
-  const DRAG_BOTTOM = isArrivedAtDropoff && isCollectingFromReceiver ? containerHeight - 406 : isArrivedAtDropoff ? containerHeight - 322 : isDelivering ? containerHeight - 218 : isPaymentCollected ? containerHeight - 274 : isArrived ? arrivedBottom : containerHeight - 218;
+  const DRAG_BOTTOM = isArrivedAtDropoff && isCollectingFromReceiver ? containerHeight - 406 : isArrivedAtDropoff ? containerHeight - 322 : isDelivering ? containerHeight - 242 : isPaymentCollected ? containerHeight - 274 : isArrived ? arrivedBottom : containerHeight - 242;
 
   const handleDrag = (event: any, info: any) => {
     // only used when dragging to close
@@ -1794,7 +1807,7 @@ function BottomSheetS({ isOpen, setIsOpen, isArrived, isPaymentCollected, isDeli
               <div className="bg-[rgba(73,93,122,0.08)] h-[6px] rounded-[100px] shrink-0 w-[40px]" data-name="Bar" />
             </div>
           </div>
-          <Status onToggle={() => setIsOpen(!isOpen)} isOpen={isOpen} isScrolled={isScrolled} titleText={titleText} name={statusName} />
+          <Status onToggle={() => setIsOpen(!isOpen)} isOpen={isOpen} isScrolled={isScrolled} titleText={titleText} name={statusName} rating={statusRating} />
         </div>
 
         <div
@@ -1817,6 +1830,11 @@ function BottomSheetS({ isOpen, setIsOpen, isArrived, isPaymentCollected, isDeli
             }}>
               <DeliveryDetails
                 isDelivering={isDelivering}
+                senderName="Alexandra Dumitrescu"
+                receiverName="Mihai Ionescu"
+                pickupAddress="Bulevardul Regina Elisabeta 4"
+                dropoffAddress="Șoseaua Ștefan cel Mare 15"
+                cityName="București"
                 onCancelDelivery={onCancelDelivery}
                 onSenderCall={onSenderCall}
                 onReceiverCall={onReceiverCall}
@@ -1884,7 +1902,7 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   );
 }
 
-export default function App() {
+export default function AppRomania() {
   const [unlocked, setUnlocked] = useState(() => {
     try { return localStorage.getItem("bolt-send-unlocked") === "1"; } catch { return false; }
   });
@@ -2003,7 +2021,13 @@ export default function App() {
               transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
               className="absolute inset-0 size-full z-[100] bg-white origin-center pointer-events-auto"
             >
-              <AcceptanceScreen onAccept={() => setIsAccepted(true)} />
+              <AcceptanceScreen
+                onAccept={() => setIsAccepted(true)}
+                priceText="94.60 lei"
+                senderName="Alexandra Dumitrescu"
+                pickupAddress="Bulevardul Regina Elisabeta 4, București"
+                dropoffAddress="Șoseaua Ștefan cel Mare 15, București"
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -2088,7 +2112,7 @@ export default function App() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="absolute inset-0 size-full pointer-events-none z-[10]"
           >
-            <BottomSheetS key={restartKey} isOpen={isOpen} setIsOpen={setIsOpen} isArrived={isArrived} isPaymentCollected={isPaymentCollected} isDelivering={isDelivering} isArrivedAtDropoff={isArrivedAtDropoff} isCollectingFromReceiver={isCollectingFromReceiver} variant={variant} onCancelDelivery={() => { setCancelReasons(isArrivedAtDropoff ? ARRIVED_CANCEL_REASONS : isArrived && !isDelivering && !isPaymentCollected ? WAITING_CANCEL_REASONS : PICKUP_CANCEL_REASONS); setIsCancelDeliveryOpen(true); }} onSenderCall={() => setCallContact('Chandra Krishnamurthy')} onReceiverCall={() => setCallContact('Flington Doe')} onSenderMessage={() => setMessagingContact('Chandra Krishnamurthy')} onReceiverMessage={() => setMessagingContact('Flington Doe')} />
+            <BottomSheetS key={restartKey} isOpen={isOpen} setIsOpen={setIsOpen} isArrived={isArrived} isPaymentCollected={isPaymentCollected} isDelivering={isDelivering} isArrivedAtDropoff={isArrivedAtDropoff} isCollectingFromReceiver={isCollectingFromReceiver} variant={variant} onCancelDelivery={() => { setCancelReasons(isArrivedAtDropoff ? ARRIVED_CANCEL_REASONS : isArrived && !isDelivering && !isPaymentCollected ? WAITING_CANCEL_REASONS : PICKUP_CANCEL_REASONS); setIsCancelDeliveryOpen(true); }} onSenderCall={() => setCallContact('Alexandra Dumitrescu')} onReceiverCall={() => setCallContact('Mihai Ionescu')} onSenderMessage={() => setMessagingContact('Alexandra Dumitrescu')} onReceiverMessage={() => setMessagingContact('Mihai Ionescu')} />
             
             <div 
               className={`absolute bottom-0 left-0 w-full z-[20] pointer-events-none transition-shadow duration-300 ${isOpen ? 'shadow-[0px_-4px_12px_0px_rgba(0,0,0,0.12)]' : ''}`}
@@ -2107,7 +2131,7 @@ export default function App() {
                       <CashChipBanner
                         collected={receiverCashCollected}
                         error={chipError}
-                        headerText={receiverCashCollected ? '18.92 € collected' : 'Collect 18.92 €'}
+                        headerText={receiverCashCollected ? '94.60 lei collected' : 'Collect 94.60 lei'}
                         onToggle={() => {
                           setReceiverCashCollected(c => !c);
                           if (chipError) setChipError(false);
