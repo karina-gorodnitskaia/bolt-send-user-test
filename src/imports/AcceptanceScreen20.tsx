@@ -4,40 +4,21 @@ import StatusBarIOs from "./StatusBarIOs-5-1464";
 import imgScreenshot20251218At1610051 from "figma:asset/392c6152d984c893b80513632d946d4b154d85d2.png";
 import imgCardboardBox from "figma:asset/759932a51064a500584acb8ecf6e34a84745d9d9.png";
 
-function ButtonBasis() {
-  return (
-    <div className="h-[48px] relative shrink-0 w-[121px]" data-name="Button basis">
-      <div className="absolute bg-[#2a313c] inset-0 rounded-[100px]" data-name="Basis" />
-    </div>
-  );
-}
-
-function IcClose() {
-  return (
-    <div className="-translate-y-1/2 absolute left-[16px] size-[24px] top-1/2" data-name="ic_close">
-      <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 size-[24px] top-1/2" data-name="call">
-        <div className="absolute flex inset-[20.83%] items-center justify-center" style={{ containerType: "size" }}>
-          <div className="-rotate-180 -scale-x-100 flex-none h-[100cqh] w-[100cqw]">
-            <div className="relative size-full" data-name="shape">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 14 14">
-                <path d={svgPaths.p142f0e00} fill="var(--fill-0, #FAFAFB)" id="shape" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function FabStandardExtendedInactive() {
   return (
-    <div className="content-stretch flex flex-col gap-[10px] items-end pr-[12px] relative shrink-0" data-name="FAB/Standard/Extended/Inactive">
-      <ButtonBasis />
-      <IcClose />
-      <p className="absolute font-['Euclid_Circular_B:Regular',sans-serif] leading-[24px] left-[48px] not-italic text-[#fafafb] text-[16px] top-[calc(50%-12px)] whitespace-nowrap" style={{ fontFeatureSettings: "'lnum', 'tnum'" }}>
+    <div
+      className="flex items-center gap-[8px] rounded-full bg-[#2a313c] mr-[12px] h-[48px] pl-[14px] pr-[20px]"
+      data-name="FAB/Standard/Extended/Inactive"
+    >
+      <svg width="16" height="16" viewBox="0 0 14 14" fill="none" className="shrink-0">
+        <path d={svgPaths.p142f0e00} fill="#FAFAFB" />
+      </svg>
+      <span
+        className="font-['Euclid_Circular_B:Regular',sans-serif] text-[#fafafb] text-[16px] leading-[24px]"
+        style={{ fontFeatureSettings: "'lnum', 'tnum'" }}
+      >
         Decline
-      </p>
+      </span>
     </div>
   );
 }
