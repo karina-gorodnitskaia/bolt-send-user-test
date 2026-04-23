@@ -1224,16 +1224,18 @@ function RatingScreen({ onConfirm }: { onConfirm: () => void }) {
         </motion.button>
       </div>
 
-      <AnimatePresence>
-        {isCommentFocused && (
-          <QwertyKeyboard
-            onKey={(ch) => { setComment((c) => c + ch); if (fieldError) setFieldError(false); }}
-            onSpace={() => { setComment((c) => c + ' '); }}
-            onBackspace={() => { setComment((c) => c.slice(0, -1)); }}
-            onReturn={() => { setIsCommentFocused(false); }}
-          />
-        )}
-      </AnimatePresence>
+      <div className="hidden sm:block">
+        <AnimatePresence>
+          {isCommentFocused && (
+            <QwertyKeyboard
+              onKey={(ch) => { setComment((c) => c + ch); if (fieldError) setFieldError(false); }}
+              onSpace={() => { setComment((c) => c + ' '); }}
+              onBackspace={() => { setComment((c) => c.slice(0, -1)); }}
+              onReturn={() => { setIsCommentFocused(false); }}
+            />
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 }
