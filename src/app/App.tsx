@@ -1743,7 +1743,7 @@ function BottomSheetS({ isOpen, setIsOpen, isArrived, isPaymentCollected, isDeli
   const deliveryMins = Math.floor(deliveryTimeLeft / 60);
   const deliverySecs = deliveryTimeLeft % 60;
   const formattedDeliveryTime = `${deliveryMins.toString().padStart(2, '0')}:${deliverySecs.toString().padStart(2, '0')}`;
-  const titleText = isArrivedAtDropoff ? 'Arrived' : isDelivering ? `Delivery in ${formattedDeliveryTime}` : isArrived ? `${formattedTime} Waiting` : undefined;
+  const titleText = isArrivedAtDropoff ? 'Arrived' : isDelivering ? 'Delivery in 15 min' : isArrived ? `${formattedTime} Waiting` : undefined;
   const statusName = isDelivering || isArrivedAtDropoff ? 'Flington Doe' : 'Chandra Krishnamurthy';
 
   const DRAG_TOP = 44;
