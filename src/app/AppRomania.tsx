@@ -2130,7 +2130,7 @@ export default function AppRomania() {
                     <>
                       <CashChipBanner
                         collected
-                        collectedLabel="Proceed with the delivery"
+                        collectedLabel=""
                         headerText="Receiver verified"
                         actionLabel="Enter PIN"
                         onToggle={() => {}}
@@ -2225,7 +2225,7 @@ export default function AppRomania() {
                       <CashChipBanner
                         collected={cashCollected}
                         error={chipError}
-                        collectedLabel="Proceed with delivery"
+                        collectedLabel=""
                         headerText={cashCollected && receiverPaying ? 'Ask receiver to pay at the dropoff' : undefined}
                         onToggle={() => {
                           setCashCollected(c => !c);
