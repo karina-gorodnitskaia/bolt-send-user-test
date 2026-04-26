@@ -592,12 +592,14 @@ export default function AcceptanceScreen({ onAccept, priceText, senderName, pick
       <div className="absolute left-0 top-0 w-full pointer-events-none">
         <StatusBarIOs />
       </div>
-      <div className="absolute content-stretch flex flex-col isolate items-center justify-end left-[24px] top-[91px] w-[36px]" data-name="Pin">
-        <Bubble />
-        <Pillar />
-      </div>
-      <div className="absolute h-[42px] left-[13px] top-[93px] w-[57px]" data-name="Cardboard Box">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgCardboardBox} />
+      <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[375px] h-full pointer-events-none">
+        <div className="absolute content-stretch flex flex-col isolate items-center justify-end left-[24px] top-[91px] w-[36px]" data-name="Pin">
+          <Bubble />
+          <Pillar />
+        </div>
+        <div className="absolute h-[42px] left-[13px] top-[93px] w-[57px]" data-name="Cardboard Box">
+          <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgCardboardBox} />
+        </div>
       </div>
     </div>
   );
