@@ -3,5 +3,6 @@
 @import './theme.css';
 
 @media (pointer: coarse), (max-width: 639px) {
-  .status-bar-ios { opacity: 0 !important; }
+  div.status-bar-ios,
+  .status-bar-ios { opacity: 0 !important; visibility: hidden !important; }
 }
