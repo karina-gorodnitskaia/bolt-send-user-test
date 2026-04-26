@@ -919,7 +919,7 @@ function ChatScreen({ contactName, onClose }: { contactName: string; onClose: ()
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-2">
+      <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-2" style={{ touchAction: 'pan-y', overscrollBehavior: 'contain' }}>
         {messages.map((m, i) => (
           <div key={i} className={`flex ${m.from === 'me' ? 'justify-end' : 'justify-start'}`}>
             <div
@@ -1833,6 +1833,7 @@ function BottomSheetS({ isOpen, setIsOpen, isArrived, isPaymentCollected, isDeli
         <div
           className="bg-white flex-1 w-full relative pointer-events-auto overflow-y-auto overflow-x-hidden z-[2]"
           onScroll={(e) => setIsScrolled(e.currentTarget.scrollTop > 0)}
+          style={{ touchAction: 'pan-y', overscrollBehavior: 'contain' }}
         >
           <div className={`sticky top-0 left-0 w-full h-[1px] -mt-[1px] pointer-events-none z-[50] transition-shadow duration-300 ${isScrolled ? 'shadow-[0px_4px_12px_0px_rgba(0,0,0,0.12)]' : 'shadow-none'}`} />
           {isOpen && (
@@ -2046,7 +2047,7 @@ export default function App() {
         </>
       )}
 
-      <div id="app-container" className="relative h-full w-full sm:h-[812px] sm:w-[375px] overflow-hidden bg-black sm:shadow-xl sm:rounded-[40px] sm:border-[8px] sm:border-black">
+      <div id="app-container" className="relative h-full w-full sm:h-[812px] sm:w-[375px] overflow-hidden bg-black sm:shadow-xl sm:rounded-[40px] sm:border-[8px] sm:border-black" style={{ touchAction: 'none', overscrollBehavior: 'none' }}>
         <AnimatePresence>
           {!isAccepted && (
             <motion.div
