@@ -1246,11 +1246,18 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
   const [pin, setPin] = useState('');
   const [errorShown, setErrorShown] = useState(false);
   const [isCantFindCodeOpen, setIsCantFindCodeOpen] = useState(false);
+  const hiddenInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleDigit = (d: string) => {
-    if (pin.length >= 4) return;
-    if (errorShown) return;
-    const next = pin + d;
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 640;
+    if (isMobile) {
+      const t = setTimeout(() => hiddenInputRef.current?.focus(), 350);
+      return () => clearTimeout(t);
+    }
+  }, []);
+
+  const commitPin = (next: string) => {
     setPin(next);
     if (next.length === 4) {
       if (next === '0000') {
@@ -1259,6 +1266,12 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
         setTimeout(() => onComplete(), 280);
       }
     }
+  };
+
+  const handleDigit = (d: string) => {
+    if (pin.length >= 4) return;
+    if (errorShown) return;
+    commitPin(pin + d);
   };
 
   const handleBackspace = () => {
@@ -1395,7 +1408,26 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
 
         <div className="flex-1" />
 
-        <div className="bg-[#CCD0D6] pt-[6px] px-[3px]" style={{ paddingBottom: 'calc(48px + env(safe-area-inset-bottom))' }}>
+        <input
+          ref={hiddenInputRef}
+          type="tel"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          autoComplete="one-time-code"
+          maxLength={4}
+          value={pin}
+          onChange={(e) => {
+            const v = e.target.value.replace(/[^0-9]/g, '').slice(0, 4);
+            if (errorShown) setErrorShown(false);
+            commitPin(v);
+          }}
+          className="absolute opacity-0 pointer-events-none"
+          style={{ left: -9999, top: -9999, fontSize: 16 }}
+          aria-label="PIN code"
+        />
+
+        <style>{`@media (pointer: coarse), (max-width: 639px) { .pin-custom-keypad { display: none !important; } }`}</style>
+        <div className="pin-custom-keypad bg-[#CCD0D6] pt-[6px] px-[3px]" style={{ paddingBottom: 'calc(48px + env(safe-area-inset-bottom))' }}>
           <div className="grid grid-cols-3 gap-[6px]">
             {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((d, i) => (
               <KeypadButton key={d} digit={d} letters={letters[i] || undefined} onPress={handleDigit} />
