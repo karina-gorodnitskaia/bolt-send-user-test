@@ -452,6 +452,7 @@ export default function AcceptanceScreen({ onAccept, priceText, senderName, pick
         <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[831px] left-[calc(50%+68.75px)] top-[calc(50%-1.52px)] w-[1376px]" data-name="Screenshot 2025-12-18 at 16.10.05 1">
           <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgScreenshot20251218At1610051} />
         </div>
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[375px] h-full pointer-events-none" data-name="Overlay Anchor">
         <div className="absolute flex h-[288.041px] items-center justify-center left-[34.61px] top-[95.47px] w-[314.151px]" style={{ "--transform-inner-width": "1200", "--transform-inner-height": "19" } as React.CSSProperties}>
           <div className="flex-none rotate-[-87.83deg]">
             <div className="h-[303.88px] relative w-[276.721px]" data-name="Route background">
@@ -566,6 +567,7 @@ export default function AcceptanceScreen({ onAccept, priceText, senderName, pick
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
       <div className="absolute bg-gradient-to-b from-[50.373%] from-[rgba(0,0,0,0)] inset-0 to-[rgba(0,0,0,0.2)]" />
