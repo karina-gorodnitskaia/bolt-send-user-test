@@ -2025,7 +2025,7 @@ export default function AppRomania() {
   if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
 
   return (
-    <div className="flex h-[100dvh] w-full sm:items-center sm:justify-center bg-gray-100 relative">
+    <div className="flex h-[100dvh] w-full sm:items-center sm:justify-center bg-white sm:bg-gray-100 relative">
       <input
         ref={pinWarmupRef}
         type="tel"
