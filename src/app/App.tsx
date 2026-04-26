@@ -1249,12 +1249,7 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
   const hiddenInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 640;
-    if (isMobile) {
-      const t = setTimeout(() => hiddenInputRef.current?.focus(), 350);
-      return () => clearTimeout(t);
-    }
+    hiddenInputRef.current?.focus();
   }, []);
 
   const commitPin = (next: string) => {
@@ -1325,9 +1320,10 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
         </div>
 
         <motion.div
-          className="px-6 mt-6 flex gap-3"
+          className="px-6 mt-6 flex gap-3 cursor-text"
           animate={errorShown ? { x: [0, -8, 8, -6, 6, -3, 3, 0] } : { x: 0 }}
           transition={errorShown ? { duration: 0.5, ease: 'easeInOut' } : { duration: 0 }}
+          onClick={() => hiddenInputRef.current?.focus()}
         >
           {[0, 1, 2, 3].map((i) => {
             const isActive = !errorShown && i === pin.length;
@@ -1940,6 +1936,11 @@ export default function App() {
   const [isArrivedAtDropoff, setIsArrivedAtDropoff] = useState(false);
   const [pinEntered, setPinEntered] = useState(false);
   const [isPinScreenOpen, setIsPinScreenOpen] = useState(false);
+  const pinWarmupRef = useRef<HTMLInputElement | null>(null);
+  const openPinScreen = () => {
+    pinWarmupRef.current?.focus();
+    setIsPinScreenOpen(true);
+  };
   const [isRatingOpen, setIsRatingOpen] = useState(false);
   const [isCollectingFromReceiver, setIsCollectingFromReceiver] = useState(false);
   const [receiverCashCollected, setReceiverCashCollected] = useState(false);
@@ -2005,6 +2006,16 @@ export default function App() {
 
   return (
     <div className="flex h-[100dvh] w-full sm:items-center sm:justify-center bg-gray-100 relative">
+      <input
+        ref={pinWarmupRef}
+        type="tel"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        aria-hidden="true"
+        tabIndex={-1}
+        className="absolute opacity-0 pointer-events-none"
+        style={{ left: -9999, top: -9999, fontSize: 16 }}
+      />
       {import.meta.env.DEV && (
         <>
           <button
@@ -2179,7 +2190,7 @@ export default function App() {
                         }}
                         onActionClick={() => {
                           if (chipError) setChipError(false);
-                          setIsPinScreenOpen(true);
+                          openPinScreen();
                         }}
                       />
                       <Frame5
