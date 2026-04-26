@@ -386,7 +386,7 @@ function PaymentIssueSheet({ isOpen, onClose, onAskReceiver, onCancelDelivery, i
             </div>
 
             {/* Home indicator */}
-            <div style={{ display: 'flex', width: '100%', justifyContent: 'center', paddingTop: 12, paddingBottom: 8 }}>
+            <div className="cancel-sheet-home-indicator" style={{ display: 'flex', width: '100%', justifyContent: 'center', paddingTop: 12, paddingBottom: 8 }}>
               <div style={{ width: 134, height: 5, borderRadius: 100, background: '#191F1C' }} />
             </div>
           </motion.div>
