@@ -558,7 +558,8 @@ function CancelDeliverySheet({ isOpen, onClose, onReasonSelected, reasons = PAYM
               </div>
             )}
 
-            <div style={{ display: 'flex', width: '100%', justifyContent: 'center', paddingTop: 8, paddingBottom: 8 }}>
+            <style>{`@media (pointer: coarse), (max-width: 639px) { .cancel-sheet-home-indicator { display: none !important; } }`}</style>
+            <div className="cancel-sheet-home-indicator" style={{ display: 'flex', width: '100%', justifyContent: 'center', paddingTop: 8, paddingBottom: 8 }}>
               <div style={{ width: 134, height: 5, borderRadius: 100, background: '#191F1C' }} />
             </div>
           </motion.div>
