@@ -11,6 +11,7 @@ import walletAlertImg from "../assets/Wallet with Alert.png";
 import starImg from "../star.png";
 import pinHandTopImg from "../assets/row.png";
 import rideDetailsImg from "../Ride details Romania.png";
+import activeDeliveryImg from "../Active delivery.png";
 
 function Spacing() {
   return <div className="h-[24px] shrink-0 w-full" data-name=".Spacing" />;
@@ -2087,16 +2088,15 @@ export default function AppRomania() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
             ) : (
-              <motion.div
+              <motion.img
                 key="active-delivery"
-                className="absolute inset-0 w-full h-full"
+                src={activeDeliveryImg}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-              >
-                <ActiveDelivery isOpen={isOpen} />
-              </motion.div>
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             )}
           </AnimatePresence>
 
