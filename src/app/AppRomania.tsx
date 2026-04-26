@@ -1213,7 +1213,6 @@ function RatingScreen({ onConfirm }: { onConfirm: () => void }) {
         style={{
           paddingTop: 16,
           paddingBottom: 'calc(16px + env(safe-area-inset-bottom))',
-          boxShadow: enabled ? 'none' : '0 -4px 12px rgba(0,0,0,0.04)',
         }}
       >
         <motion.button
