@@ -10,7 +10,7 @@ import InlineNotification from "../imports/ⒼInlineNotification";
 import walletAlertImg from "../assets/Wallet with Alert.png";
 import starImg from "../star.png";
 import pinHandTopImg from "../assets/row.png";
-import rideDetailsImg from "../Ride details.png";
+import rideDetailsImg from "../Ride details Romania.png";
 
 function Spacing() {
   return <div className="h-[24px] shrink-0 w-full" data-name=".Spacing" />;
@@ -2076,7 +2076,7 @@ export default function AppRomania() {
             <StatusBarIOs />
           </div>
           <AnimatePresence mode="wait">
-            {isDelivering ? (
+            {(isDelivering || isArrivedAtDropoff) ? (
               <motion.img
                 key="map-area"
                 src={rideDetailsImg}

@@ -2052,7 +2052,7 @@ export default function App() {
             <StatusBarIOs />
           </div>
           <AnimatePresence mode="wait">
-            {isDelivering ? (
+            {(isDelivering || isArrivedAtDropoff) ? (
               <motion.img
                 key="map-area"
                 src={rideDetailsImg}
