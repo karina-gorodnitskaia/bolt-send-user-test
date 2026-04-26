@@ -1,24 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./app/App.tsx";
 import AppRomania from "./app/AppRomania.tsx";
+import AppNigeria from "./app/AppNigeria.tsx";
 import "./styles/index.css";
 
-type Tab = "default" | "romania";
+type Tab = "default" | "romania" | "nigeria";
+
+function tabFromHash(): Tab | null {
+  const h = window.location.hash.replace(/^#\/?/, "").toLowerCase();
+  if (h === "default" || h === "romania" || h === "nigeria") return h;
+  return null;
+}
 
 function Root() {
   const [tab, setTab] = useState<Tab>(() => {
+    const fromHash = tabFromHash();
+    if (fromHash) return fromHash;
     try {
       const saved = localStorage.getItem("bolt-send-tab");
-      return saved === "default" ? "default" : "romania";
+      if (saved === "default" || saved === "romania" || saved === "nigeria") return saved;
+      return "romania";
     } catch {
       return "romania";
     }
   });
 
+  useEffect(() => {
+    const onHashChange = () => {
+      const fromHash = tabFromHash();
+      if (fromHash) setTab(fromHash);
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
   const select = (t: Tab) => {
     setTab(t);
     try { localStorage.setItem("bolt-send-tab", t); } catch {}
+    if (window.location.hash !== `#/${t}`) {
+      window.history.replaceState(null, "", `#/${t}`);
+    }
   };
 
   return (
@@ -30,6 +52,7 @@ function Root() {
           {([
             ["default", "Default"],
             ["romania", "Romania"],
+            ["nigeria", "Nigeria"],
           ] as const).map(([key, label]) => (
             <button
               key={key}
@@ -43,7 +66,7 @@ function Root() {
           ))}
         </div>
       )}
-      {tab === "romania" ? <AppRomania /> : <App />}
+      {tab === "romania" ? <AppRomania /> : tab === "nigeria" ? <AppNigeria /> : <App />}
     </>
   );
 }
