@@ -1292,8 +1292,9 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
         <StatusBarIOs />
       </div>
 
+      <style>{`@media (pointer: coarse), (max-width: 639px) { .pin-screen-top { padding-top: 30px !important; } }`}</style>
       <>
-        <div className="pt-[54px] max-[639px]:pt-[30px] px-6">
+        <div className="pin-screen-top pt-[54px] px-6">
           <button
             onClick={onClose}
             aria-label="Back"
