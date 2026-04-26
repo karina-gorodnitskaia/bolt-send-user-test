@@ -30,7 +30,7 @@ function Icons() {
 
 export default function StatusBarIOs() {
   return (
-    <div className="content-stretch flex items-center justify-between pb-[12px] pl-[37px] pr-[27px] pt-[10px] relative size-full" data-name="Status Bar iOS">
+    <div className="content-stretch flex items-center justify-between pb-[12px] pl-[37px] pr-[27px] pt-[10px] relative size-full status-bar-ios" data-name="Status Bar iOS">
       <TimeStyle />
       <Icons />
     </div>

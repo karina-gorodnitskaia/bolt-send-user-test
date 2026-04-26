@@ -33,7 +33,7 @@ function Icons() {
 
 export default function StatusBarIOs() {
   return (
-    <div className="h-[44px] relative shrink-0 w-full">
+    <div className="h-[44px] relative shrink-0 w-full status-bar-ios">
       <div className="flex flex-row items-center size-full">
         <div className="content-stretch flex items-center justify-between pb-[12px] pl-[37px] pr-[27px] pt-[10px] relative size-full">
           <TimeStyle />
