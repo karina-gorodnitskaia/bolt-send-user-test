@@ -1246,11 +1246,13 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
   const [pin, setPin] = useState('');
   const [errorShown, setErrorShown] = useState(false);
   const [isCantFindCodeOpen, setIsCantFindCodeOpen] = useState(false);
+  const hiddenInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleDigit = (d: string) => {
-    if (pin.length >= 4) return;
-    if (errorShown) return;
-    const next = pin + d;
+  useEffect(() => {
+    hiddenInputRef.current?.focus();
+  }, []);
+
+  const commitPin = (next: string) => {
     setPin(next);
     if (next.length === 4) {
       if (next === '0000') {
@@ -1259,6 +1261,12 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
         setTimeout(() => onComplete(), 280);
       }
     }
+  };
+
+  const handleDigit = (d: string) => {
+    if (pin.length >= 4) return;
+    if (errorShown) return;
+    commitPin(pin + d);
   };
 
   const handleBackspace = () => {
@@ -1312,9 +1320,10 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
         </div>
 
         <motion.div
-          className="px-6 mt-6 flex gap-3"
+          className="px-6 mt-6 flex gap-3 cursor-text"
           animate={errorShown ? { x: [0, -8, 8, -6, 6, -3, 3, 0] } : { x: 0 }}
           transition={errorShown ? { duration: 0.5, ease: 'easeInOut' } : { duration: 0 }}
+          onClick={() => hiddenInputRef.current?.focus()}
         >
           {[0, 1, 2, 3].map((i) => {
             const isActive = !errorShown && i === pin.length;
@@ -1395,7 +1404,26 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
 
         <div className="flex-1" />
 
-        <div className="bg-[#CCD0D6] pt-[6px] px-[3px]" style={{ paddingBottom: 'calc(48px + env(safe-area-inset-bottom))' }}>
+        <input
+          ref={hiddenInputRef}
+          type="tel"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          autoComplete="one-time-code"
+          maxLength={4}
+          value={pin}
+          onChange={(e) => {
+            const v = e.target.value.replace(/[^0-9]/g, '').slice(0, 4);
+            if (errorShown) setErrorShown(false);
+            commitPin(v);
+          }}
+          className="absolute opacity-0 pointer-events-none"
+          style={{ left: -9999, top: -9999, fontSize: 16 }}
+          aria-label="PIN code"
+        />
+
+        <style>{`@media (pointer: coarse), (max-width: 639px) { .pin-custom-keypad { display: none !important; } }`}</style>
+        <div className="pin-custom-keypad bg-[#CCD0D6] pt-[6px] px-[3px]" style={{ paddingBottom: 'calc(48px + env(safe-area-inset-bottom))' }}>
           <div className="grid grid-cols-3 gap-[6px]">
             {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((d, i) => (
               <KeypadButton key={d} digit={d} letters={letters[i] || undefined} onPress={handleDigit} />
@@ -1908,6 +1936,11 @@ export default function App() {
   const [isArrivedAtDropoff, setIsArrivedAtDropoff] = useState(false);
   const [pinEntered, setPinEntered] = useState(false);
   const [isPinScreenOpen, setIsPinScreenOpen] = useState(false);
+  const pinWarmupRef = useRef<HTMLInputElement | null>(null);
+  const openPinScreen = () => {
+    pinWarmupRef.current?.focus();
+    setIsPinScreenOpen(true);
+  };
   const [isRatingOpen, setIsRatingOpen] = useState(false);
   const [isCollectingFromReceiver, setIsCollectingFromReceiver] = useState(false);
   const [receiverCashCollected, setReceiverCashCollected] = useState(false);
@@ -1973,6 +2006,16 @@ export default function App() {
 
   return (
     <div className="flex h-[100dvh] w-full sm:items-center sm:justify-center bg-gray-100 relative">
+      <input
+        ref={pinWarmupRef}
+        type="tel"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        aria-hidden="true"
+        tabIndex={-1}
+        className="absolute opacity-0 pointer-events-none"
+        style={{ left: -9999, top: -9999, fontSize: 16 }}
+      />
       {import.meta.env.DEV && (
         <>
           <button
@@ -2147,7 +2190,7 @@ export default function App() {
                         }}
                         onActionClick={() => {
                           if (chipError) setChipError(false);
-                          setIsPinScreenOpen(true);
+                          openPinScreen();
                         }}
                       />
                       <Frame5
