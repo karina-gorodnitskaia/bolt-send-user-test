@@ -2085,7 +2085,7 @@ export default function App() {
         </AnimatePresence>
 
         <motion.div
-          className="relative size-full bg-[#f3f4f6] origin-center"
+          className="relative size-full bg-white origin-center"
           data-name="Active delivery"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{
