@@ -1847,7 +1847,7 @@ function BottomSheetS({ isOpen, setIsOpen, isArrived, isPaymentCollected, isDeli
                 variant === 'tapChip' ? 'calc(200px + env(safe-area-inset-bottom))' :
                 'calc(220px + env(safe-area-inset-bottom))'
               ) :
-              'calc(96px + env(safe-area-inset-bottom))'
+              'calc(104px + env(safe-area-inset-bottom))'
             }}>
               <DeliveryDetails
                 isDelivering={isDelivering}
