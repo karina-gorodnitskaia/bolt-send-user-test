@@ -1293,7 +1293,7 @@ function PinCodeScreen({ onClose, onComplete }: { onClose: () => void; onComplet
       </div>
 
       <>
-        <div className="pt-[54px] px-6">
+        <div className="pt-[54px] max-[639px]:pt-[30px] px-6">
           <button
             onClick={onClose}
             aria-label="Back"
