@@ -92,7 +92,20 @@ function Row({ name = "Aisha Bello", rating }: { name?: string; rating?: string 
   );
 }
 
-function Frame1({ isOpen, name, rating }: { isOpen?: boolean; name?: string; rating?: string }) {
+function EarningsChip({ priceText }: { priceText: string }) {
+  return (
+    <div className="self-start bg-[rgba(73,93,122,0.08)] rounded-[8px] px-[12px] py-[6px] mt-[4px]">
+      <p
+        className="font-['Inter_Variable:SemiBold',sans-serif] font-[650] text-[#2a313c] text-[14px] leading-[20px] m-0 tracking-[-0.14px]"
+        style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}
+      >
+        Delivery · {priceText} · after commission
+      </p>
+    </div>
+  );
+}
+
+function Frame1({ isOpen, name, rating, earningsPrice }: { isOpen?: boolean; name?: string; rating?: string; earningsPrice?: string }) {
   if (isOpen) return null;
 
   return (
@@ -101,16 +114,17 @@ function Frame1({ isOpen, name, rating }: { isOpen?: boolean; name?: string; rat
         3 Marina Road, Lagos Island, Lagos
       </p>
       <Row name={name} rating={rating} />
+      {earningsPrice && <EarningsChip priceText={earningsPrice} />}
     </div>
   );
 }
 
-function Frame2({ onToggle, isOpen, isScrolled, titleText, name, rating }: { onToggle: () => void; isOpen?: boolean; isScrolled?: boolean; titleText?: string; name?: string; rating?: string }) {
+function Frame2({ onToggle, isOpen, isScrolled, titleText, name, rating, earningsPrice }: { onToggle: () => void; isOpen?: boolean; isScrolled?: boolean; titleText?: string; name?: string; rating?: string; earningsPrice?: string }) {
   return (
     <div className="relative shrink-0 w-full">
       <div className={`content-stretch flex flex-col items-start px-[24px] relative size-full transition-all duration-300 ${isOpen ? 'gap-0' : 'gap-[4px]'} ${isScrolled ? 'pb-[8px]' : ''}`}>
         <Frame onToggle={onToggle} isOpen={isOpen} titleText={titleText} />
-        <Frame1 isOpen={isOpen} name={name} rating={rating} />
+        <Frame1 isOpen={isOpen} name={name} rating={rating} earningsPrice={earningsPrice} />
       </div>
     </div>
   );
@@ -120,7 +134,7 @@ function Spacing1() {
   return null;
 }
 
-function Status({ onToggle, isOpen, isScrolled, titleText, name, rating }: { onToggle: () => void; isOpen?: boolean; isScrolled?: boolean; titleText?: string; name?: string; rating?: string }) {
+function Status({ onToggle, isOpen, isScrolled, titleText, name, rating, earningsPrice }: { onToggle: () => void; isOpen?: boolean; isScrolled?: boolean; titleText?: string; name?: string; rating?: string; earningsPrice?: string }) {
   return (
     <div className="bg-white content-stretch flex flex-col items-start rounded-tl-[16px] rounded-tr-[16px] shrink-0 sticky top-0 w-full z-[7]" data-name="Status">
       <div className="relative shrink-0 w-full" data-name="Ⓖ Section Header">
@@ -130,7 +144,7 @@ function Status({ onToggle, isOpen, isScrolled, titleText, name, rating }: { onT
           </div>
         </div>
       </div>
-      <Frame2 onToggle={onToggle} isOpen={isOpen} isScrolled={isScrolled} titleText={titleText} name={name} rating={rating} />
+      <Frame2 onToggle={onToggle} isOpen={isOpen} isScrolled={isScrolled} titleText={titleText} name={name} rating={rating} earningsPrice={earningsPrice} />
 
     </div>
   );
@@ -1788,13 +1802,15 @@ function BottomSheetS({ isOpen, setIsOpen, isArrived, isPaymentCollected, isDeli
   const titleText = isArrivedAtDropoff ? 'Arrived' : isDelivering ? 'Delivery in 15 min' : isArrived ? `${formattedTime} Waiting` : undefined;
   const statusName = isDelivering || isArrivedAtDropoff ? 'Oluwaseun Adeyemi' : 'Aisha Bello';
   const statusRating = isDelivering || isArrivedAtDropoff ? '4.92' : '5.0';
+  const showEarningsChip = isArrivedAtDropoff || isDelivering || !isArrived;
+  const earningsPrice = showEarningsChip ? '₦3,000' : undefined;
 
   const DRAG_TOP = 44;
   const arrivedBottom =
     variant === 'current' ? containerHeight - 302 :
     variant === 'tapChip' ? containerHeight - 322 :
     containerHeight - 330;
-  const DRAG_BOTTOM = isArrivedAtDropoff && isCollectingFromReceiver ? containerHeight - 406 : isArrivedAtDropoff ? containerHeight - 322 : isDelivering ? containerHeight - 242 : isPaymentCollected ? containerHeight - 274 : isArrived ? arrivedBottom : containerHeight - 242;
+  const DRAG_BOTTOM = isArrivedAtDropoff && isCollectingFromReceiver ? containerHeight - 450 : isArrivedAtDropoff ? containerHeight - 366 : isDelivering ? containerHeight - 286 : isPaymentCollected ? containerHeight - 274 : isArrived ? arrivedBottom : containerHeight - 286;
 
   const handleDrag = (event: any, info: any) => {
     // only used when dragging to close
@@ -1840,7 +1856,7 @@ function BottomSheetS({ isOpen, setIsOpen, isArrived, isPaymentCollected, isDeli
               <div className="bg-[rgba(73,93,122,0.08)] h-[6px] rounded-[100px] shrink-0 w-[40px]" data-name="Bar" />
             </div>
           </div>
-          <Status onToggle={() => setIsOpen(!isOpen)} isOpen={isOpen} isScrolled={isScrolled} titleText={titleText} name={statusName} rating={statusRating} />
+          <Status onToggle={() => setIsOpen(!isOpen)} isOpen={isOpen} isScrolled={isScrolled} titleText={titleText} name={statusName} rating={statusRating} earningsPrice={earningsPrice} />
         </div>
 
         <div
