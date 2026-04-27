@@ -99,7 +99,7 @@ function EarningsChip({ priceText }: { priceText: string }) {
         className="font-['Inter_Variable:SemiBold',sans-serif] font-[650] text-[#2a313c] text-[14px] leading-[20px] m-0 tracking-[-0.14px]"
         style={{ fontFeatureSettings: "'cv03', 'cv04', 'lnum', 'pnum'" }}
       >
-        Delivery · {priceText} · after commission
+        Bolt Send · {priceText} · after commission
       </p>
     </div>
   );
